@@ -36,33 +36,17 @@ class reddit:
 
 		authenticated_user=self.r.get_me()
 
-	def constructPost(self, match):
-		#constructs post, takes a match's info and formats it into reddit style
-		pass
-
-	def updateSidebar(self, matches, streams):
-		sidebar = self.r.get_wiki_page('heroesofthestorm', 'sidebar')
+	def updateSidebar(self, matches, streams, freeRotation, saleRotation):
+		sidebar = self.r.get_wiki_page('kalebhermes', 'sidebar')
 		sidebarWiki = sidebar.content_md
-		sidebarWiki = sidebarWiki.replace("%%EVENTS%%", matches);
-		sidebarWiki = sidebarWiki.replace("%%STREAMS%%", streams)
-		self.r.update_settings(self.r.get_subreddit('heroesofthestorm'), description=sidebarWiki)
+		if matches:
+			sidebarWiki = sidebarWiki.replace("%%EVENTS%%", matches)
+		if streams:
+			sidebarWiki = sidebarWiki.replace("%%STREAMS%%", streams)
+		if freeRotation:
+			sidebarWiki = sidebarWiki.replace("%%FREEROTATION%%", freeRotation)
+		if saleRotation:
+			sidebarWiki = sidebarWiki.replace("%%SALEROTATION%%", saleRotation)
+
+		self.r.update_settings(self.r.get_subreddit('kalebhermes'), description=sidebarWiki)
 		return sidebarWiki.encode('ascii','ignore')	
-
-	def updateSidebarNoStream(self, matches):
-		sidebar = self.r.get_wiki_page('heroesofthestorm', 'sidebar')
-		sidebarWiki = sidebar.content_md
-		sidebarWiki = sidebarWiki.replace("%%EVENTS%%", matches);
-		# sidebarWiki = sidebarWiki.replace("%%STREAMS%%", streams)
-		self.r.update_settings(self.r.get_subreddit('heroesofthestorm'), description=sidebarWiki)
-		return sidebarWiki.encode('ascii','ignore')
-
-
-	def upsateSidebarWeeklyRotation(self):
-		pass
-
-	def getSidebar(self):
-		pass
-
-	def makePost(self, post):
-		#takes a constructed post and posts it
-		pass
