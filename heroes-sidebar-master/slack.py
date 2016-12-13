@@ -7,6 +7,6 @@ class slack():
 		self.slack = Slacker(self.env.slackAPIToken)
 
 
-	def postToSlack(self, message, messageTwo):
-		sendingMessage = message + messageTwo
+	def postToSlack(self, message, messageTwo, messageThree, messageFour):
+		sendingMessage = message + messageTwo + messageThree + messageFour
 		self.slack.chat.post_message('#kalebapitests', sendingMessage)
