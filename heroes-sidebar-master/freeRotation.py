@@ -4,6 +4,7 @@ from lxml import html
 from lxml.cssselect import CSSSelector
 import requests
 import string
+from email_me import email_me
 
 
 class freeRotation:
@@ -13,7 +14,16 @@ class freeRotation:
 		self.saleRotation = None;
 
 	def scrapeRotation(self):
-		forum_page = requests.get('http://us.battle.net/heroes/en/forum/topic/17936383460')
+		try:
+			forum_page = requests.get('http://us.battle.net/heroes/en/forum/topic/17936383460')
+		except request.exceptions.ConnectionError:
+			data = json.loads(urllib.urlopen("http://ip.jsontest.com/").read())
+			email = email_me()
+			message = 'Heroes Bot Didnt Update\n' + 'The Bot didn\'t update because it couldn\'t get ROTATION from Blizzard Forums. Check it out.\nThe IP is ' + str(data["ip"])
+			email.populate_email('Heroes Bot Fail', message)
+			email.send_email()
+			sys.exit("Couldn't get ROTATION from Blizzard Forums")
+
 		tree = html.fromstring(forum_page.text)
 
 		results = CSSSelector('div.TopicPost-bodyContent li')
@@ -72,7 +82,16 @@ class freeRotation:
 		return string
 
 	def scrapeSales(self):
-		forum_page = requests.get('http://us.battle.net/heroes/en/forum/topic/18183929301')
+		try:
+			forum_page = requests.get('http://us.battle.net/heroes/en/forum/topic/18183929301')
+		except request.exceptions.ConnectionError:
+			data = json.loads(urllib.urlopen("http://ip.jsontest.com/").read())
+			email = email_me()
+			message = 'Heroes Bot Didnt Update\n' + 'The Bot didn\'t update because it couldn\'t get SALES from Blizzard Forums. Check it out.\nThe IP is ' + str(data["ip"])
+			email.populate_email('Heroes Bot Fail', message)
+			email.send_email()
+			sys.exit("Couldn't get SALES from Blizzard Forums")
+				
 		tree = html.fromstring(forum_page.text)
 
 		results = CSSSelector('div.TopicPost-bodyContent li:contains("Sale")')
