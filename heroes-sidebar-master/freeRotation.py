@@ -31,7 +31,7 @@ class freeRotation:
 		heroList = [Hero.text for Hero in preParsedFreeRotation]
 
 		for i in range(10):
-			heroList[i] = heroList[i].split("(", 1)[0].replace(' ','').replace('.','').replce("'",'')
+			heroList[i] = heroList[i].split("(", 1)[0].replace(' ','').replace('.','').replace("'",'')
 
 		return heroList
 
