@@ -36,7 +36,7 @@ class reddit:
 
 		authenticated_user=self.r.get_me()
 
-	def updateSidebar(self, matches, streams, freeRotation, saleRotation):
+	def updateSidebar(self, matches, streams, freeRotation):
 		sidebar = self.r.get_wiki_page('heroesofthestorm', 'sidebar')
 		sidebarWiki = sidebar.content_md
 		if matches:
@@ -45,8 +45,6 @@ class reddit:
 			sidebarWiki = sidebarWiki.replace("%%STREAMS%%", streams)
 		if freeRotation:
 			sidebarWiki = sidebarWiki.replace("%%FREEROTATION%%", freeRotation)
-		if saleRotation:
-			sidebarWiki = sidebarWiki.replace("%%SALEROTATION%%", saleRotation)
 
 		self.r.update_settings(self.r.get_subreddit('heroesofthestorm'), description=sidebarWiki)
 		return sidebarWiki.encode('ascii','ignore')	
