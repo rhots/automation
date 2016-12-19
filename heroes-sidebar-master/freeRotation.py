@@ -46,8 +46,11 @@ class freeRotation:
 			'Varian':'',
 		}
 		subs = {
+                        'liming': 'li-ming',
 			'ltmorales': 'lt-morales',
+                        'sgthammer': 'sgt-hammer',
 			'thebutcher': 'the-butcher',
+                        'thelostvikings': 'the-lost-vikings',
 		}
 
 		self.freeRotation.append("")
