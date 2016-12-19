@@ -11,7 +11,6 @@ class freeRotation:
 
 	def __init__(self):
 		self.freeRotation = None;
-		self.saleRotation = None;
 
 	def scrapeRotation(self):
 		try:
@@ -81,46 +80,6 @@ class freeRotation:
 			string += item + '\n'
 		return string
 
-	def scrapeSales(self):
-		try:
-			forum_page = requests.get('http://us.battle.net/heroes/en/forum/topic/18183929301')
-		except request.exceptions.ConnectionError:
-			data = json.loads(urllib.urlopen("http://ip.jsontest.com/").read())
-			email = email_me()
-			message = 'Heroes Bot Didnt Update\n' + 'The Bot didn\'t update because it couldn\'t get SALES from Blizzard Forums. Check it out.\nThe IP is ' + str(data["ip"])
-			email.populate_email('Heroes Bot Fail', message)
-			email.send_email()
-			sys.exit("Couldn't get SALES from Blizzard Forums")
-				
-		tree = html.fromstring(forum_page.text)
-
-		results = CSSSelector('div.TopicPost-bodyContent li:contains("Sale")')
-		preParsedSaleRotation = results(tree)
-
-		self.saleRotation = [SaleItem.xpath("string()") for SaleItem in preParsedSaleRotation]
-		return self.saleRotation
-
-	def buildSales(self):
-		saleList = self.scrapeSales()
-
-		self.saleRotation = []
-
-		count = 0
-		# 7 if only 3, 13 if 6 for sale
-		for i in range(7):
-		# for i in range(13):
-			if i % 2 == 0:
-				self.saleRotation.append("")
-			else:
-				self.saleRotation.append(saleList[count])
-				count = count + 1
-
-		string = ''
-		for item in self.saleRotation:
-			string += item + '\n'
-		
-		return string
-
 
 
 
@@ -128,4 +87,3 @@ class freeRotation:
 # if __name__ == '__main__':
 # 	rotation = freeRotation()
 # 	print rotation.buildRotation()
-# 	print rotation.buildSales()
