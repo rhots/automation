@@ -24,7 +24,7 @@ def get_heroes_data():
 
 def main():
     heroes = get_heroes_data()
-    heroes = [(h['name'], h['slug']) for h in heroes]
+    heroes = [(h['name'], h['slug']) for h in heroes if h['inFreeHeroRotation'] == True]
     print(heroes)
 
 if __name__ == "__main__":
