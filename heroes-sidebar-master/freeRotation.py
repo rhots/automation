@@ -1,10 +1,12 @@
+import sys
+from selenium import webdriver
+from selenium.common.exceptions import WebDriverException
 import requests
 import json
 from lxml import html
 from lxml.cssselect import CSSSelector
 import requests
 import string
-from email_me import email_me
 
 
 class freeRotation:
@@ -13,43 +15,25 @@ class freeRotation:
 		self.freeRotation = None;
 
 	def scrapeRotation(self):
-		try:
-			forum_page = requests.get('http://us.battle.net/heroes/en/forum/topic/17936383460')
-		except request.exceptions.ConnectionError:
-			data = json.loads(urllib.urlopen("http://ip.jsontest.com/").read())
-			email = email_me()
-			message = 'Heroes Bot Didnt Update\n' + 'The Bot didn\'t update because it couldn\'t get ROTATION from Blizzard Forums. Check it out.\nThe IP is ' + str(data["ip"])
-			email.populate_email('Heroes Bot Fail', message)
-			email.send_email()
-			sys.exit("Couldn't get ROTATION from Blizzard Forums")
+	    # We prefer the PhantomJS driver to avoid opening any GUI windows.
+	    browser = webdriver.PhantomJS()
+	    browser.get("http://us.battle.net/heroes/en/heroes/#/")
+	    heroes = browser.execute_script("return window.heroes;")
+	    browser.quit()
 
-		tree = html.fromstring(forum_page.text)
+	    heroes = [(h['name'], h['slug']) for h in heroes if h['inFreeHeroRotation'] == True]
 
-		results = CSSSelector('div.TopicPost-bodyContent li')
-		preParsedFreeRotation = results(tree)
-
-		heroList = [Hero.text for Hero in preParsedFreeRotation]
-
-		for i in range(10):
-			heroList[i] = heroList[i].split("(", 1)[0].replace(' ','').replace('.','').replace("'",'')
-
-		return heroList
+	    return heroes
 
 	def buildRotation(self):
 		heroList = self.scrapeRotation()
 
 		self.freeRotation = []
 		twoHeros = {
-			'Samuro':'',
-			'Ragnaros':'',
-			'Varian':'',
-		}
-		subs = {
-                        'liming': 'li-ming',
-			'ltmorales': 'lt-morales',
-                        'sgthammer': 'sgt-hammer',
-			'thebutcher': 'the-butcher',
-                        'thelostvikings': 'the-lost-vikings',
+			'samuro':'',
+			'ragnaros':'',
+			'varian':'',
+			'zuljin':'',
 		}
 
 		self.freeRotation.append("")
@@ -59,16 +43,13 @@ class freeRotation:
 
 		for i in range(14):
 			if i in range(0, 3) or i in range (4, 8) or i in range(9, 12):
-				forURL = heroList[count].lower()
-
-				if forURL in subs:
-					forURL = subs[forURL]
+				forURL = heroList[count][1]
 
 				isTwoHero = ''
 				if forURL in twoHeros:
 					isTwoHero = '2'
 
-				heroName = heroList[count]
+				heroName = heroList[count][0].replace(' ','').replace('.','').replace("'",'')
 				self.freeRotation.append("[](http://us.battle.net/heroes/en/heroes/{0}/#free_rotation{2}#{1})".format(forURL, heroName, isTwoHero))
 				count = count + 1
 
@@ -87,6 +68,6 @@ class freeRotation:
 
 
 
-# if __name__ == '__main__':
-# 	rotation = freeRotation()
-# 	print rotation.buildRotation()
+if __name__ == '__main__':
+	rotation = freeRotation()
+	print rotation.buildRotation()
