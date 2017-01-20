@@ -1,0 +1,8 @@
+[DEFAULT]
+check_for_updates=false
+username=HotSBot
+password=REPLACEME
+
+[sidebar_updater]
+client_id=REPLACEME
+client_secret=REPLACEME
