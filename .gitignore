@@ -37,4 +37,8 @@
 ehthumbs.db
 Thumbs.db
 
+# virtualenv
+venv/
+
 env.py
+praw.ini
