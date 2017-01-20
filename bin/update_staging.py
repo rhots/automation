@@ -1,6 +1,6 @@
-from automation import Rotation, Sidebar, Twitch
+from automation import Gosugamers, Rotation, Sidebar, Twitch
 
-events = "No upcoming matches"
+events = Gosugamers().sidebar_text()
 rotation = Rotation().sidebar_text()
 streams = Twitch().sidebar_text()
 
