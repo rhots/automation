@@ -1,7 +1,6 @@
 import os
 import random
 
-import requests
 from twitch.api import v3 as twitch
 
 class Twitch:
@@ -9,8 +8,7 @@ class Twitch:
     Heroes of the Storm streams."""
 
     def __init__(self):
-        twitch_client_id = os.environ["TWITCH_CLIENT_ID"]
-        twitch.CLIENT_ID = twitch_client_id
+        twitch.CLIENT_ID = os.environ["TWITCH_CLIENT_ID"]
 
     # TODO: doesn't use pagination, limited to 100 streams by twitch
     def _get_streams(self):

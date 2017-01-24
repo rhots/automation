@@ -2,6 +2,7 @@ import praw
 
 from . import __version__
 
+
 class Sidebar:
     """Sidebar provides a simple API to update the subreddit's sidebar
     using the template found in the wiki. It expects a praw.ini
@@ -22,4 +23,7 @@ class Sidebar:
         new_sidebar = new_sidebar.replace("%%FREEROTATION%%", freeRotation)
         new_sidebar = new_sidebar.replace("%%STREAMS%%", streams)
 
-        self._subreddit.mod.update(description=new_sidebar)
+        self._subreddit.mod.update(
+            description=new_sidebar,
+            spoilers_enabled=True,
+        )

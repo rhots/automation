@@ -1,6 +1,7 @@
 __version__ = "0.0.1"
 
 from .exceptions import HeroDoesNotExistError
+from .gosugamers import Gosugamers
 from .hero import Hero
 from .heroes_data import HEROES
 from .rotation import Rotation
