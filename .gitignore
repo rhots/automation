@@ -39,6 +39,7 @@ Thumbs.db
 
 # virtualenv
 venv/
+.cache
 
 env.py
 praw.ini
