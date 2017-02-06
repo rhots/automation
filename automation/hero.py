@@ -7,7 +7,7 @@ class Hero:
     well as convert to different representations (battle.net slug,
     CSS class)."""
 
-    PUNCTUATION_BLACKLIST = (",", ".", "`", "'")
+    PUNCTUATION_BLACKLIST = (",", ".", "`", "'", "-")
 
     def __init__(self, name):
         if name not in HEROES:
