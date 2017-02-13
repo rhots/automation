@@ -65,4 +65,5 @@ HEROES = [
     "Ragnaros",
     "Zul'jin",
     "Valeera",
+    "Lúcio",
 ]
