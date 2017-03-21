@@ -56,7 +56,7 @@ HEROES = [
     "Tracer",
     "Chromie",
     "Medivh",
-    "Guldan",
+    "Gul'dan",
     "Auriel",
     "Alarak",
     "Zarya",
@@ -66,4 +66,5 @@ HEROES = [
     "Zul'jin",
     "Valeera",
     "Lúcio",
+    "Probius",
 ]

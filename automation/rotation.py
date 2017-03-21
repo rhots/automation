@@ -3,17 +3,22 @@ import requests
 
 from .hero import Hero
 
+import sys
+
+from selenium import webdriver
+from selenium.common.exceptions import WebDriverException
 
 class Rotation:
     """Rotation is able to get the latest free hero rotation."""
 
     FORUM_URL = "https://us.battle.net/heroes/en/forum/topic/17936383460"
     # TODO: omg get this outta here
-    SECOND_SPRITESHEET_HEROES = ["Samuro", "Ragnaros", "Varian", "Zul'Jin", "Valeera", "Lúcio"]
+    SECOND_SPRITESHEET_HEROES = ["Samuro", "Ragnaros", "Varian", "Zul'Jin", "Valeera", "Lúcio", "Probius"]
 
     def __init__(self):
         pass
 
+    #depricated
     def get_rotation(self):
         html = requests.get(self.FORUM_URL).text
         soup = BeautifulSoup(html, "html.parser")
@@ -26,6 +31,22 @@ class Rotation:
         heroes = [Hero(name) for name in heroes]
 
         return date, heroes
+
+    def get_heroes_data(self):
+        # We prefer the PhantomJS driver to avoid opening any GUI windows.
+        browser = webdriver.PhantomJS()
+        browser.get("http://us.battle.net/heroes/en/heroes/#/")
+        heroes = browser.execute_script("return window.heroes;")
+        browser.quit()
+
+        return heroes
+
+
+    def getRotationHeroes(self):
+        heroes = self.get_heroes_data()
+        heroes = [(h['name']) for h in heroes if h['inFreeHeroRotation']]
+        heroes = [Hero(name) for name in heroes]
+        return heroes
 
     # TODO: omg get this outta here
     def sidebar_text(self):
@@ -40,7 +61,8 @@ class Rotation:
             * bottom
         """
 
-        _, heroes = self.get_rotation()
+        # _, heroes = self.get_rotation()
+        heroes = self.getRotationHeroes()
         formatted_heroes = [self._format_hero(h) for h in heroes]
 
         spacer = "[](#spacer)"
