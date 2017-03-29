@@ -9,7 +9,7 @@ class Rotation:
 
     FORUM_URL = "https://us.battle.net/heroes/en/forum/topic/17936383460"
     # TODO: omg get this outta here
-    SECOND_SPRITESHEET_HEROES = ["Samuro", "Ragnaros", "Varian", "Zul'Jin", "Valeera", "Lúcio"]
+    SECOND_SPRITESHEET_HEROES = ["Samuro", "Ragnaros", "Varian", "Zul'jin", "Valeera", "Lúcio"]
 
     def __init__(self):
         pass
