@@ -13,7 +13,7 @@ class Sidebar:
 
         user_agent = "script:sidebarupdater:v{0} (by /u/HotSBot)".format(__version__)
 
-        reddit = praw.Reddit('sidebar_updater', user_agent=user_agent)
+        reddit = praw.Reddit(user_agent=user_agent)
         self._subreddit = reddit.subreddit(sub_name)
 
     def update(self, events, freeRotation, streams):
