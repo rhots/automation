@@ -23,7 +23,4 @@ class Sidebar:
         new_sidebar = new_sidebar.replace("%%FREEROTATION%%", freeRotation)
         new_sidebar = new_sidebar.replace("%%STREAMS%%", streams)
 
-        self._subreddit.mod.update(
-            description=new_sidebar,
-            spoilers_enabled=True,
-        )
+        self._subreddit.wiki['config/sidebar'].edit(new_sidebar)

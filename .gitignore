@@ -43,3 +43,4 @@ venv/
 
 env.py
 praw.ini
+.env

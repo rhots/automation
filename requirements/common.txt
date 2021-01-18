@@ -1,7 +1,7 @@
 beautifulsoup4==4.5.3
 ics==0.4
-praw==4.2.0
+praw~=7.1.0
 python-dateutil==2.7.5
-python-twitch==1.3.0
-requests~=2.20.0
+python-twitch-client~=0.7.1
+requests~=2.20
 slackclient==1.0.4
