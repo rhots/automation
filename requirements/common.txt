@@ -4,4 +4,3 @@ praw~=7.1.0
 python-dateutil==2.7.5
 python-twitch-client~=0.7.1
 requests~=2.20
-slackclient==1.0.4

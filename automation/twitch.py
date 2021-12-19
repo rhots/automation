@@ -1,28 +1,33 @@
 import os
 import random
 
-from twitch import TwitchClient
+from twitch import TwitchHelix
 
 class Twitch:
     """Twitch enables interaction with the twitch.tv API to get info on
     Heroes of the Storm streams."""
 
     def __init__(self):
-        self._client = TwitchClient(client_id=os.environ["TWITCH_CLIENT_ID"])
+        self._client = TwitchHelix(
+            client_id=os.environ["TWITCH_CLIENT_ID"],
+            client_secret=os.environ["TWITCH_CLIENT_SECRET"],
+        )
+        self._client.get_oauth()
 
     # TODO: doesn't use pagination, limited to 100 streams by twitch
     def _get_streams(self):
-        return self._client.streams.get_live_streams(
-            game="Heroes of the Storm", limit=100)
+        games = self._client.get_games(names=["Heroes of the Storm"])
+        game_id = games[0]["id"]
+        return self._client.get_streams(game_ids=[game_id], page_size=100)
 
     def _format_stream(self, stream):
         """Takes a stream dict as found in API responses and formats it
         for the sidebar."""
 
-        display_name = stream["channel"]["display_name"].strip()
-        status = stream["channel"]["status"].strip()
-        viewers = str(stream["viewers"])
-        url = stream["channel"]["url"]
+        display_name = stream["user_name"].strip()
+        status = stream["title"].strip()
+        viewers = str(stream["viewer_count"])
+        url = "https://www.twitch.tv/{}".format(stream["user_login"])
 
         return "* [{0} ~~{1}~~ ^{2}]({3})\n\n".format(
                 display_name,
